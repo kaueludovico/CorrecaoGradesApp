@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/registerFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.bigrocket.highschool.view.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_listAverageFragment"
+            app:destination="@id/listAverageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listAverageFragment"
+        android:name="com.bigrocket.highschool.view.ListAverageFragment"
+        android:label="fragment_list_average"
+        tools:layout="@layout/fragment_list_average" >
+
+        <argument
+            android:name="student"
+            app:argType="com.bigrocket.highschool.model.Student" />
+        <action
+            android:id="@+id/action_listAverageFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_listAverageFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+        <argument android:name="studentUpdated"
+            app:argType="com.bigrocket.highschool.model.Student"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.bigrocket.highschool.view.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="student"
+            app:argType="com.bigrocket.highschool.model.Student" />
+        <argument
+            android:name="average"
+            app:argType="float" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.bigrocket.highschool.view.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <argument
+            android:name="student"
+            app:argType="com.bigrocket.highschool.model.Student" />
+        <action
+            android:id="@+id/action_updateFragment_to_listAverageFragment"
+            app:destination="@id/listAverageFragment" />
+    </fragment>
+</navigation>
