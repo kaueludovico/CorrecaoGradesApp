@@ -81,15 +81,6 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        radioButton.setOnClickListener {
-            averageAdapter.returnPosition {
-                positionItem = it
-            }
-        }
-    }
-
     private fun checkReceiptNewData() {
         if (args.studentUpdated != null) {
             setUpdateData()
