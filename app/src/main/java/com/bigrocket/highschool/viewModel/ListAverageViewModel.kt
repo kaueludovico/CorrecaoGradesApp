@@ -14,7 +14,7 @@ class ListAverageViewModel(private val student: Student,
 
     private var list = mutableListOf<Student>()
 
-    fun readStudent() : List<Student> {
+    fun readStudent() : MutableList<Student> {
         list.add(student)
         return list
     }
@@ -39,7 +39,6 @@ class ListAverageViewModel(private val student: Student,
 
     fun onSaveStudentData() {
         val json = Gson().toJson(student)
-
         myPrefs().edit {
             putString("initialStudent", json)
             commit()

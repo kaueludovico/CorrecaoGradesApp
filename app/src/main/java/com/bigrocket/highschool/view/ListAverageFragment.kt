@@ -1,6 +1,5 @@
 package com.bigrocket.highschool.view
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -13,25 +12,103 @@ import com.bigrocket.highschool.model.Student
 import com.bigrocket.highschool.view.adapter.ListAverageAdapter
 import com.bigrocket.highschool.viewModel.ListAverageViewModel
 import kotlinx.android.synthetic.main.fragment_list_average.*
+import kotlinx.android.synthetic.main.res_list_average.*
 
 class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
 
     private lateinit var viewModel: ListAverageViewModel
     lateinit var averageAdapter: ListAverageAdapter
     private val args: ListAverageFragmentArgs by navArgs()
+    private var floatActionButtonVisible = false
+    lateinit var positionItem: Student
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViewModel()
-        setAdapter()
+
+        checkReceiptNewData()
+        checkInitialized()
         viewModel.onSaveStudentData()
+
+        floatActionButton()
+    }
+
+    private fun floatActionButton() {
+
+        floatActionButtonVisible = false
+
+        openFloatButton.setOnClickListener {
+            if (!floatActionButtonVisible) {
+                addFloatButton.show()
+                editFloatButton.show()
+                deleteFloatButton.show()
+
+                addFloatButton.visibility = View.VISIBLE
+                editFloatButton.visibility = View.VISIBLE
+                deleteFloatButton.visibility = View.VISIBLE
+
+                openFloatButton.setImageResource(R.drawable.ic_close)
+
+                floatActionButtonVisible = true
+            } else {
+                addFloatButton.hide()
+                editFloatButton.hide()
+                deleteFloatButton.hide()
+
+                addFloatButton.visibility = View.GONE
+                editFloatButton.visibility = View.GONE
+                deleteFloatButton.visibility = View.GONE
+
+                openFloatButton.setImageResource(R.drawable.ic_add)
+
+                floatActionButtonVisible = false
+            }
+        }
+
+        addFloatButton.setOnClickListener {
+            println(">>>>>>>>>>>>>>>>>>>")
+            println("ADICIONANDO ->")
+            println(">>>>>>>>>>>>>>>>>>>")
+        }
+
+        editFloatButton.setOnClickListener {
+            navigationToUpdate()
+        }
+
+        deleteFloatButton.setOnClickListener {
+            println(">>>>>>>>>>>>>>>>>>>")
+            println("DELETANDO ->")
+            println(">>>>>>>>>>>>>>>>>>>")
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        radioButton.setOnClickListener {
+            averageAdapter.returnPosition {
+                positionItem = it
+            }
+        }
+    }
+
+    private fun checkReceiptNewData() {
         if (args.studentUpdated != null) {
             setUpdateData()
+            checkInitialized()
+        }
+    }
+
+    private fun checkInitialized() {
+        if (!this::averageAdapter.isInitialized &&
+                !this::viewModel.isInitialized) {
+            setViewModel()
             setAdapter()
+        } else {
+            for (i in averageAdapter.list.indices) {
+                if (averageAdapter.list[i] === averageAdapter.list[i]) {
+                    averageAdapter.list.removeAt(i)
+                    setAdapter()
+                }
+            }
         }
     }
 
@@ -49,11 +126,8 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
     private fun setAdapter() {
         averageAdapter = ListAverageAdapter(
             viewModel.readStudent(),
-            viewModel.averageCalculate(),
-            { navigationToDetails(it) },
-            { navigationToUpdate(it) },
-            { viewModel.deleteStudent(it) }
-        )
+            viewModel.averageCalculate()
+        ) { navigationToDetails(it) }
 
         recyclerView.apply {
             adapter = averageAdapter
@@ -62,16 +136,16 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
     }
 
     private fun navigationToDetails(student: Student) {
-        var action = ListAverageFragmentDirections.actionListAverageFragmentToDetailsFragment(
+        val action = ListAverageFragmentDirections.actionListAverageFragmentToDetailsFragment(
             student,
             viewModel.averageCalculate()
         )
         findNavController().navigate(action)
     }
 
-    private fun navigationToUpdate(student: Student) {
-        var action = ListAverageFragmentDirections.actionListAverageFragmentToUpdateFragment(
-            student
+    private fun navigationToUpdate() {
+        val action = ListAverageFragmentDirections.actionListAverageFragmentToUpdateFragment(
+            positionItem
         )
         findNavController().navigate(action)
     }

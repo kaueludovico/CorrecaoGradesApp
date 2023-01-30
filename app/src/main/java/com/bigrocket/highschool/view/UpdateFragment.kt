@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_update.*
 
 class UpdateFragment : Fragment(R.layout.fragment_update) {
 
-    val args: UpdateFragmentArgs by navArgs()
+    private val args: UpdateFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +22,7 @@ class UpdateFragment : Fragment(R.layout.fragment_update) {
         }
     }
 
-    fun setDataField() {
+    private fun setDataField() {
         editTextNomeUpdate.setText(args.student.name)
         editTextMateriaUpdate.setText(args.student.matter)
         editTextNota1Update.setText(args.student.noteOne.toString())
@@ -31,8 +31,8 @@ class UpdateFragment : Fragment(R.layout.fragment_update) {
         editTextNota4Update.setText(args.student.noteFour.toString())
     }
 
-    fun setUpdate() {
-        var student = Student(
+    private fun setUpdate() {
+        val student = Student(
             editTextNomeUpdate.text.toString(),
             editTextMateriaUpdate.text.toString(),
             editTextNota1Update.text.toString().toFloat(),

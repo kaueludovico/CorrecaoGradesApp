@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ListAverageFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -17,4 +16,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!--on below line we are creating a add fab-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteFloatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/purple_500"
+            android:contentDescription="@string/app_name"
+            android:padding="4dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white" />
+
+        <!--on below line we are creating a home fab
+             and setting its visibility to gone-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editFloatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/purple_500"
+            android:contentDescription="@string/app_name"
+            android:padding="4dp"
+            android:src="@drawable/ic_edit"
+            android:visibility="gone"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addFloatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/purple_500"
+            android:contentDescription="@string/app_name"
+            android:padding="4dp"
+            android:src="@drawable/ic_add"
+            android:visibility="gone"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white" />
+
+        <!--on below line we are creating a settings fab
+            and setting its visibility to gone-->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/openFloatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/purple_500"
+            android:contentDescription="@string/app_name"
+            android:padding="4dp"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
