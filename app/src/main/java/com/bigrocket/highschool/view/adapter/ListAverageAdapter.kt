@@ -11,11 +11,10 @@ import kotlinx.android.synthetic.main.res_list_average.view.*
 class ListAverageAdapter(
     val list: MutableList<Student>,
     val average: Float,
-    private val onClicked: (Student) -> Unit
+    private val onClicked: (Student) -> Unit,
+    private val radioButton: (Student) -> Unit
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    lateinit var student: Student
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ListAverageViewHolder(
@@ -26,18 +25,13 @@ class ListAverageAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is ListAverageViewHolder -> {
-                holder.bind(list[position], onClicked)
-                student = list[position]
+                holder.bind(list[position], onClicked, radioButton)
             }
         }
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    fun returnPosition(callback: (Student) -> Unit) {
-        callback(student)
     }
 
     inner class ListAverageViewHolder constructor(
@@ -47,12 +41,15 @@ class ListAverageAdapter(
         private var studentAverage = itemView.average
 
         fun bind(student: Student,
-                 onClicked: (Student) -> Unit) {
+                 onClicked: (Student) -> Unit, radioButton: (Student) -> Unit) {
             studentName.text = student.name
             studentAverage.text = "$average"
 
             itemView.setOnClickListener {
                 onClicked(student)
+            }
+            itemView.radioButton.setOnClickListener {
+                radioButton(student)
             }
         }
     }

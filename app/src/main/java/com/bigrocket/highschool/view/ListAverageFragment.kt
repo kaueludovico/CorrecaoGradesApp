@@ -20,7 +20,7 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
     lateinit var averageAdapter: ListAverageAdapter
     private val args: ListAverageFragmentArgs by navArgs()
     private var floatActionButtonVisible = false
-    lateinit var positionItem: Student
+    lateinit var studentItem: Student
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +31,7 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
 
         floatActionButton()
     }
+
 
     private fun floatActionButton() {
 
@@ -75,9 +76,7 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
         }
 
         deleteFloatButton.setOnClickListener {
-            println(">>>>>>>>>>>>>>>>>>>")
-            println("DELETANDO ->")
-            println(">>>>>>>>>>>>>>>>>>>")
+            deleteItem()
         }
     }
 
@@ -117,8 +116,9 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
     private fun setAdapter() {
         averageAdapter = ListAverageAdapter(
             viewModel.readStudent(),
-            viewModel.averageCalculate()
-        ) { navigationToDetails(it) }
+            viewModel.averageCalculate(),
+         { navigationToDetails(it) },
+         { itemToUpdate(it) } )
 
         recyclerView.apply {
             adapter = averageAdapter
@@ -134,10 +134,18 @@ class ListAverageFragment : Fragment(R.layout.fragment_list_average) {
         findNavController().navigate(action)
     }
 
+    private fun itemToUpdate(student: Student) {
+        this.studentItem = student
+    }
+
     private fun navigationToUpdate() {
         val action = ListAverageFragmentDirections.actionListAverageFragmentToUpdateFragment(
-            positionItem
+            this.studentItem
         )
         findNavController().navigate(action)
+    }
+
+    private fun deleteItem() {
+        viewModel.deleteStudent(studentItem)
     }
 }
